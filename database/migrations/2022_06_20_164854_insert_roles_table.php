@@ -14,7 +14,18 @@ class InsertRolesTable extends Migration
      */
     public function up()
     {
-        //
+        \DB::table('roles')->insert([
+            'name' => 'superadmin',
+            'guard_name' => 'web',
+        ]);
+        \DB::table('roles')->insert([
+            'name' => 'mahasiswa',
+            'guard_name' => 'web',
+        ]);
+        \DB::table('roles')->insert([
+            'name' => 'dosen',
+            'guard_name' => 'web',
+        ]);
     }
 
     /**
@@ -24,32 +35,6 @@ class InsertRolesTable extends Migration
      */
     public function down()
     {
-        \DB::table('roles')->insert([
-            'name' => 'superadmin',
-            'guard_name' => 'api',
-        ]);
 
-        \DB::table('roles')->insert([
-            'name' => 'superadmin',
-            'guard_name' => 'web',
-        ]);
-        \DB::table('roles')->insert([
-            'name' => 'mahasiswa',
-            'guard_name' => 'api',
-        ]);
-
-        \DB::table('roles')->insert([
-            'name' => 'mahasiswa',
-            'guard_name' => 'web',
-        ]);
-        \DB::table('roles')->insert([
-            'name' => 'dosen',
-            'guard_name' => 'api',
-        ]);
-
-        \DB::table('roles')->insert([
-            'name' => 'dosen',
-            'guard_name' => 'web',
-        ]);
     }
 }

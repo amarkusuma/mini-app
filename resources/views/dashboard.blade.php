@@ -31,7 +31,7 @@
                         <a href="{{route('mahasiswa')}}">Mahasiswa</a>
                     </li>
                     @endrole
-                    @role('superadmin|mahasiswa')
+                    @role('superadmin|dosen')
                     <li>
                         <a href="{{route('dosen')}}">Dosen</a>
                     </li>

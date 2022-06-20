@@ -17,16 +17,6 @@ class InsertUser2Table extends Migration
      */
     public function up()
     {
-        //
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
         $faker = Faker::create('id_ID');
 
         $superadmin = User::create([
@@ -56,5 +46,14 @@ class InsertUser2Table extends Migration
         $superadmin->syncRoles($superadminRole);
         $dosen->syncRoles($dosenRole);
         $mahasiswa->syncRoles($mahasiswaRole);
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
     }
 }
