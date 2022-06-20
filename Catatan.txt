@@ -1,0 +1,61 @@
+Login
+- username
+- password
+
+Register
+- username
+- email
+- password
+
+fakultas 
+- CRUD
+- search
+
+Jurusan
+- CRUD
+- search 
+
+Mahasiswa
+- relation master
+- active or inactive
+- filter by fakultas / jurusan
+
+  - name
+  - jurusan_id
+  - fakultas_id
+  - alamat (textarea)
+  - provinsi / province_id
+  - kab/kota / city_id
+  - kecamatan / district_id
+  - kelurahan / subdistrict_id
+  - RT/RW string
+
+Dosen
+- relation master
+- active or inactive
+
+  - alamat (textarea)
+  - provinsi
+  - kab/kota
+  - kecamatan
+  - kelurahan
+  - RT/RW
+
+Report PDF & Excel 
+- Mahasiswa 
+- Dosen
+
+Change password
+
+Logout
+
+UI / UX with bootstrap & css
+
+Role 
+- Superadmin
+- Dosen
+- Mahasiswa
+
+Data Dummy menggunakan faker/factories min 30 data
+
+
