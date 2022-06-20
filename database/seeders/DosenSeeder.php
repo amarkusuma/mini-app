@@ -20,8 +20,6 @@ class DosenSeeder extends Seeder
         $faker = Faker::create('id_ID');
 
     	for($i = 1; $i <= 30; $i++){
-
-    	      // insert data ke table pegawai menggunakan Faker
     		DB::table('dosen')->insert([
     			'name' => $faker->name,
                 'status_id' => $faker->numberBetween(1,2),

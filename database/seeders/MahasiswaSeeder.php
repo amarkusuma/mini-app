@@ -19,7 +19,6 @@ class MahasiswaSeeder extends Seeder
 
     	for($i = 1; $i <= 30; $i++){
 
-    	      // insert data ke table pegawai menggunakan Faker
     		DB::table('mahasiswa')->insert([
     			'name' => $faker->name,
                 'status_id' => $faker->numberBetween(1,2),
