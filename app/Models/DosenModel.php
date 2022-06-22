@@ -13,7 +13,7 @@ class DosenModel extends Model
     protected $table = 'dosen';
 
     protected $fillable = [
-        'id', 'name', 'status_id', 'address', 'fakultas_id', 'jurusan_id', 'prov_id', 'city_id', 'dis_id', 'subdis_id', 'Rt'
+        'id', 'name', 'foto', 'status_id', 'address', 'fakultas_id', 'jurusan_id', 'prov_id', 'city_id', 'dis_id', 'subdis_id', 'Rt'
     ];
 
     public function status(): BelongsTo

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,3 +53,6 @@ Route::post('/mahasiswa-delete/{id}', [App\Http\Controllers\MahasiswaController:
 Route::get('/cities/{prov_id}', [App\Http\Controllers\LocationController::class, 'cities'])->name('cities');
 Route::get('/districts/{city_id}', [App\Http\Controllers\LocationController::class, 'districts'])->name('districts');
 Route::get('/subdistricts/{prov_id}', [App\Http\Controllers\LocationController::class, 'subdistricts'])->name('subdistricts');
+
+Route::get('/password-change', [App\Http\Controllers\Auth\ChangePasswordController::class, 'index'])->name('password-change');
+Route::post('/password-change', [App\Http\Controllers\Auth\ChangePasswordController::class, 'passwordChange'])->name('password-change');

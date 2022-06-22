@@ -3,13 +3,19 @@
 @section('content-view')
 <div class="create-dosen">
     <h3 class="mb-5">Create Dosen</h3>
-    <form method="POST" action="{{route('dosen-store')}}">
+    <form method="POST" action="{{route('dosen-store')}}" enctype="multipart/form-data">
         @csrf
         <div class="form-row">
             <div class="col-lg-6 col-md-6 mb-2">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 mb-2">
+                <div class="form-group">
+                    <label for="name">Foto</label>
+                    <input type="file" class="form-control" name="foto" value="" id="foto" placeholder="Upload Foto" accept=".png,.jpg,.jpeg">
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 mb-2">

@@ -12,6 +12,7 @@
         <thead>
            <tr>
               <th>Id</th>
+              <th>Image</th>
               <th>Name</th>
               <th>Status</th>
               <th>Fakultas</th>
@@ -29,11 +30,14 @@
           serverSide: true,
           ajax: '{{ url('dosen-datatable') }}',
           columns: [
-                   { data: 'id', name: 'id' },
+                    { data: 'id', render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                    }},
+                   { data: 'image', name: 'image', sClass:'text-center' },
                    { data: 'name', name: 'name' },
-                   { data: 'status.name', name: 'status' },
-                   { data: 'fakultas.name', name: 'fakultas' },
-                   { data: 'jurusan.name', name: 'jurusan' },
+                   { data: 'status_name', name: 'status_name' },
+                   { data: 'fakultas_name', name: 'fakultas_name' },
+                   { data: 'jurusan_name', name: 'jurusan_name' },
                    {data: 'Actions', name: 'Actions',orderable:false,serachable:false,sClass:'text-center'},
                 ]
        });

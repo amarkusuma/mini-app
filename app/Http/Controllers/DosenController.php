@@ -24,18 +24,17 @@ class DosenController extends Controller
 
     public function dosen()
     {
-        $dosen = DosenModel::all();
+        $dosen = DosenModel::query();
 
-        collect($dosen)->map(function($data) {
-            $status = $data->status ? $data->status->name : null;
-            $data['status'] = $status;
-            $fakultas = $data->fakultas ? $data->fakultas->name : null;
-            $data['fakultas'] = $fakultas;
-            $jurusan = $data->jurusan ? $data->jurusan->name : null;
-            $data['jurusan'] = $jurusan;
-
-            return $data;
-        });
+        // collect($dosen)->map(function($data) {
+        //     $status = $data->status ? $data->status->name : null;
+        //     $data['status'] = $status;
+        //     $fakultas = $data->fakultas ? $data->fakultas->name : null;
+        //     $data['fakultas'] = $fakultas;
+        //     $jurusan = $data->jurusan ? $data->jurusan->name : null;
+        //     $data['jurusan'] = $jurusan;
+        //     return $data;
+        // });
 
         return DataTables::of($dosen)
         ->addColumn('Actions', function($data) {
@@ -43,7 +42,23 @@ class DosenController extends Controller
             <a href="'.route('dosen-edit', $data->id).'" class="btn btn-success btn-sm">Edit</a>
                 <button type="button" data-id="'.$data->id.'" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
         })
-        ->rawColumns(['Actions'])
+        ->addColumn('image', function($data){
+            return '<img src="/storage/asset/dosen/'.$data->foto.'" style="width:50px;height:50px">';
+        })
+        ->addColumn('fakultas_name', function($data){
+            $fakultas = $data->fakultas ? $data->fakultas->name : null;
+            return $fakultas;
+        })
+        ->addColumn('jurusan_name', function($data){
+            $jurusan = $data->jurusan ? $data->jurusan->name : null;
+            return $jurusan;
+        })
+        ->addColumn('status_name', function($data){
+            $status = $data->status ? $data->status->name : null;
+            return $status;
+        })
+        ->orderColumn('id', '-id $1')
+        ->rawColumns(['Actions', 'fakultas_name', 'jurusan_name', 'status_name', 'image'])
         ->make(true);
     }
 
@@ -67,8 +82,19 @@ class DosenController extends Controller
     {
         $validation = $request->only(['name', 'status_id', 'fakultas_id', 'jurusan_id', 'address', 'prov_id', 'city_id', 'dis_id', 'subdis_id', 'Rt' ]);
 
+        $request->validate([
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000',
+        ]);
+
+        if($request->hasFile('foto')){
+            $image  = $request->file('foto');
+            $imageName = time().'.'.$image->extension();
+            $image->storeAs('public/asset/dosen/', $imageName);
+        }
+
         $dosen = DosenModel::create([
             'name' => $validation['name'],
+            'foto' => $imageName ?? null,
             'status_id' => $request->status_id,
             'fakultas_id' => $request->fakultas_id,
             'jurusan_id' => $request->jurusan_id,
@@ -102,10 +128,25 @@ class DosenController extends Controller
 
     public function update(Request $request, $id)
     {
-        $dosen = DosenModel::find($id);
-
         $validation = $request->only(['name', 'status_id', 'fakultas_id', 'jurusan_id', 'address', 'prov_id', 'city_id', 'dis_id', 'subdis_id', 'Rt' ]);
 
+        $request->validate([
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2000',
+        ]);
+
+        $dosen = DosenModel::find($id);
+
+        if ($request->hasFile('foto')) {
+            $image  = $request->file('foto');
+            $imageName = time().'.'.$image->extension();
+            $image->storeAs('public/asset/dosen/', $imageName);
+            $file = public_path('/storage/asset/dosen/'.$dosen->foto);
+            if (file_exists($file) && !empty($dosen->foto)) {
+                unlink($file);
+            }
+        }
+
+        $dosen->foto = $imageName ?? $dosen->foto;
         $dosen->name = $validation['name'];
         $dosen->status_id = $request->status_id;
         $dosen->fakultas_id = $request->fakultas_id;
@@ -124,6 +165,13 @@ class DosenController extends Controller
     public function delete($id)
     {
         $dosen = DosenModel::find($id);
+        if (!empty($dosen->foto)) {
+            $file = public_path('/storage/asset/dosen/'.$dosen->foto);
+            if (file_exists($file) && !empty($dosen->foto)) {
+                unlink($file);
+            }
+        }
+
         $dosen->delete();
 
         return response()->json('delete success');
